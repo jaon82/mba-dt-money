@@ -22,7 +22,13 @@ const newTransactionFormSchema = zod.object({
 
 type NewTransactionForm = zod.infer<typeof newTransactionFormSchema>;
 
-export function NewTransactionModal() {
+interface NewTransactionModalProps {
+  handleSetOpenModal: (open: boolean) => void;
+}
+
+export function NewTransactionModal({
+  handleSetOpenModal,
+}: NewTransactionModalProps) {
   const { createTransaction } = useContext(TransactionsContext);
   const {
     control,
@@ -37,6 +43,7 @@ export function NewTransactionModal() {
   async function handleCreateNewTransaction(data: NewTransactionForm) {
     createTransaction(data);
     reset();
+    handleSetOpenModal(false);
   }
 
   return (
